@@ -1,0 +1,230 @@
+create database Merchanic;
+use Merchanic;
+create table Vat_tu(
+    id int primary key auto_increment,
+    ma_vat_tu varchar(50) ,
+    ten_vat_tu varchar(50),
+    don_vi_tinh varchar(50),
+    gia_tien int
+);
+create table ton_kho(
+    id int primary key auto_increment,
+    vat_tu_id int,
+    so_luong_dau int,
+    tong_so_luong_nhap int,
+    tong_so_luong_xuat int
+);
+create table nha_cung_cap(
+    id int primary key auto_increment,
+    ma_nha_cung_cap varchar(50),
+    ten_nha_cung_cap varchar(50),
+    dia_chi varchar(50),
+    so_dien_thoai varchar(50)
+);
+create table don_dat_hang(
+    id int primary key auto_increment,
+    ma_don varchar(50),
+    ngay_dat_hang datetime,
+    nha_cung_cap_id int
+);
+create table phieu_nhap(
+    id int primary key auto_increment,
+    ma_phieu_nhap varchar(50),
+    ngay_nhap datetime,
+    don_hang_id int
+);
+create table phieu_xuat(
+    id int primary key auto_increment,
+    ma_phieu_xuat varchar(50),
+    ngay_xuat datetime,
+    ten_khach_hang varchar(50)
+);
+create table chi_tiet_don_hang(
+    id int primary key auto_increment,
+    don_hang_id int,
+    vat_tu_id int,
+    so_luong_dat int);
+create table chi_tiet_phieu_nhap(
+    id int primary key auto_increment,
+    phieu_nhap_id int,
+    vat_tu_id int,
+    so_luong_nhap int,
+    don_gia_nhap int,
+    ghi_chu varchar(50)
+);
+create table chi_tiet_phieu_xuat(
+    id int primary key auto_increment,
+    phieu_xuat_id int,
+    vat_tu_id int,
+    so_luong_xuat int,
+    don_gia_xuat int,
+    ghi_chu varchar(50)
+);
+
+alter table ton_kho add foreign key (vat_tu_id) references vat_tu(id);
+alter table don_dat_hang add foreign key (nha_cung_cap_id) references nha_cung_cap(id);
+alter table phieu_nhap add foreign key (don_hang_id) references don_dat_hang(id);
+alter table chi_tiet_don_hang add foreign key (don_hang_id) references don_dat_hang(id);
+alter table chi_tiet_don_hang add foreign key (vat_tu_id) references vat_tu(id);
+alter table chi_tiet_phieu_nhap add foreign key (phieu_nhap_id) references phieu_nhap(id);
+alter table chi_tiet_phieu_nhap add foreign key (vat_tu_id) references vat_tu(id);
+alter table chi_tiet_phieu_xuat add foreign key (phieu_xuat_id) references phieu_xuat(id);
+alter table chi_tiet_phieu_xuat add foreign key (vat_tu_id) references vat_tu(id);
+
+insert into vat_tu (ma_vat_tu, ten_vat_tu, don_vi_tinh, gia_tien) values ('a','điều hòa','VNĐ',5000000);
+insert into vat_tu (ma_vat_tu, ten_vat_tu, don_vi_tinh, gia_tien) values ('b','nóng lạnh','VNĐ',2000000);
+insert into vat_tu (ma_vat_tu, ten_vat_tu, don_vi_tinh, gia_tien) values ('c','tủ lạnh','VNĐ',8000000);
+insert into vat_tu (ma_vat_tu, ten_vat_tu, don_vi_tinh, gia_tien) values ('d','bếp gas','VNĐ',1000000);
+insert into vat_tu (ma_vat_tu, ten_vat_tu, don_vi_tinh, gia_tien) values ('e','ti vi','VNĐ',4000000);
+
+
+
+insert into ton_kho (vat_tu_id, so_luong_dau, tong_so_luong_nhap, tong_so_luong_xuat) values (1,30,20,8);
+insert into ton_kho (vat_tu_id, so_luong_dau, tong_so_luong_nhap, tong_so_luong_xuat) values (2,40,30,11);
+insert into ton_kho (vat_tu_id, so_luong_dau, tong_so_luong_nhap, tong_so_luong_xuat) values (2,10,20,8);
+insert into ton_kho (vat_tu_id, so_luong_dau, tong_so_luong_nhap, tong_so_luong_xuat) values (3,30,20,8);
+insert into ton_kho (vat_tu_id, so_luong_dau, tong_so_luong_nhap, tong_so_luong_xuat) values (2,30,25,7);
+insert into ton_kho (vat_tu_id, so_luong_dau, tong_so_luong_nhap, tong_so_luong_xuat) values (4,30,22,6);
+insert into ton_kho (vat_tu_id, so_luong_dau, tong_so_luong_nhap, tong_so_luong_xuat) values (5,30,14,7);
+insert into ton_kho (vat_tu_id, so_luong_dau, tong_so_luong_nhap, tong_so_luong_xuat) values (4,30,22,11);
+insert into ton_kho (vat_tu_id, so_luong_dau, tong_so_luong_nhap, tong_so_luong_xuat) values (1,30,20,8);
+
+
+insert into nha_cung_cap (ma_nha_cung_cap, ten_nha_cung_cap, dia_chi, so_dien_thoai) values ('1','Sun House','Hn','123456');
+insert into nha_cung_cap (ma_nha_cung_cap, ten_nha_cung_cap, dia_chi, so_dien_thoai) values ('2','Kangaroo','Đn','223456');
+insert into nha_cung_cap (ma_nha_cung_cap, ten_nha_cung_cap, dia_chi, so_dien_thoai) values ('3','Toshiba','Hcm','122456');
+
+
+insert into don_dat_hang (ma_don, ngay_dat_hang, nha_cung_cap_id) values ('1','2022-02-25',1);
+insert into don_dat_hang (ma_don, ngay_dat_hang, nha_cung_cap_id) values ('1','2022-03-10',2);
+insert into don_dat_hang (ma_don, ngay_dat_hang, nha_cung_cap_id) values ('1','2022-01-02',3);
+
+
+insert into phieu_nhap(ma_phieu_nhap, ngay_nhap, don_hang_id) values ('1','2021-12-12',1);
+insert into phieu_nhap(ma_phieu_nhap, ngay_nhap, don_hang_id) values ('2','2022-03-15',2);
+insert into phieu_nhap(ma_phieu_nhap, ngay_nhap, don_hang_id) values ('3','2021-12-12',3);
+
+
+insert into phieu_xuat(ma_phieu_xuat, ngay_xuat, ten_khach_hang) values ('1','2022-04-15','Tình');
+insert into phieu_xuat(ma_phieu_xuat, ngay_xuat, ten_khach_hang) values ('2','2022-05-15','Tài');
+insert into phieu_xuat(ma_phieu_xuat, ngay_xuat, ten_khach_hang) values ('3','2022-03-20','Tình');
+
+
+insert into chi_tiet_don_hang(don_hang_id, vat_tu_id, so_luong_dat) values (1,1,10);
+insert into chi_tiet_don_hang(don_hang_id, vat_tu_id, so_luong_dat) values (2,1,10);
+insert into chi_tiet_don_hang(don_hang_id, vat_tu_id, so_luong_dat) values (1,3,10);
+insert into chi_tiet_don_hang(don_hang_id, vat_tu_id, so_luong_dat) values (1,4,10);
+insert into chi_tiet_don_hang(don_hang_id, vat_tu_id, so_luong_dat) values (3,1,10);
+insert into chi_tiet_don_hang(don_hang_id, vat_tu_id, so_luong_dat) values (1,5,10);
+
+
+insert into chi_tiet_phieu_nhap(phieu_nhap_id, vat_tu_id, so_luong_nhap, don_gia_nhap, ghi_chu) values (1,2,20,1000000,'ok');
+insert into chi_tiet_phieu_nhap(phieu_nhap_id, vat_tu_id, so_luong_nhap, don_gia_nhap, ghi_chu) values (2,3,20,22000000,'ko ok');
+insert into chi_tiet_phieu_nhap(phieu_nhap_id, vat_tu_id, so_luong_nhap, don_gia_nhap, ghi_chu) values (3,2,20,11000000,'ok');
+insert into chi_tiet_phieu_nhap(phieu_nhap_id, vat_tu_id, so_luong_nhap, don_gia_nhap, ghi_chu) values (1,4,20,1000000,'ko ok');
+insert into chi_tiet_phieu_nhap(phieu_nhap_id, vat_tu_id, so_luong_nhap, don_gia_nhap, ghi_chu) values (2,5,20,1000000,'ok');
+insert into chi_tiet_phieu_nhap(phieu_nhap_id, vat_tu_id, so_luong_nhap, don_gia_nhap, ghi_chu) values (1,1,20,1200000,'ok');
+
+
+
+insert into chi_tiet_phieu_xuat(phieu_xuat_id, vat_tu_id, so_luong_xuat, don_gia_xuat, ghi_chu) values (1,1,100,10000000,'no cmt');
+insert into chi_tiet_phieu_xuat(phieu_xuat_id, vat_tu_id, so_luong_xuat, don_gia_xuat, ghi_chu) values (2,2,150,20000000,'no cmt');
+insert into chi_tiet_phieu_xuat(phieu_xuat_id, vat_tu_id, so_luong_xuat, don_gia_xuat, ghi_chu) values (3,5,100,31000000,'no cmt');
+insert into chi_tiet_phieu_xuat(phieu_xuat_id, vat_tu_id, so_luong_xuat, don_gia_xuat, ghi_chu) values (1,1,100,11000000,'no cmt2');
+insert into chi_tiet_phieu_xuat(phieu_xuat_id, vat_tu_id, so_luong_xuat, don_gia_xuat, ghi_chu) values (1,4,100,21000000,'no cmt3');
+insert into chi_tiet_phieu_xuat(phieu_xuat_id, vat_tu_id, so_luong_xuat, don_gia_xuat, ghi_chu) values (1,3,200,41000000,'no cmt');
+
+
+
+
+# Câu 1. Tạo view có tên vw_CTPNHAP bao gồm các thông tin sau: số phiếu
+# nhập hàng, mã vật tư, số lượng nhập, đơn giá nhập, thành tiền nhập
+create view vw_CTPNHAP as
+select phieu_nhap_id, vat_tu_id, so_luong_nhap,don_gia_nhap, don_gia_nhap*so_luong_nhap as Thanh_tien_nhap
+from chi_tiet_phieu_nhap join phieu_nhap pn on chi_tiet_phieu_nhap.phieu_nhap_id = pn.id;
+
+# Câu 2. Tạo view có tên vw_CTPNHAP_VT bao gồm các thông tin sau: số
+# phiếu nhập hàng, mã vật tư, tên vật tư, số lượng nhập, đơn giá nhập,
+# thành tiền nhập.
+
+create view vw_CTPNHAP_VT as
+select ten_vat_tu, vw_CTPNHAP.* from vw_CTPNHAP join vat_tu;
+
+
+# Câu 3. Tạo view có tên vw_CTPNHAP_VT_PN bao gồm các thông tin sau: số
+# phiếu nhập hàng, ngày nhập hàng, số đơn đặt hàng, mã vật tư, tên vật tư,
+# số lượng nhập, đơn giá nhập, thành tiền nhập.
+
+
+select ngay_nhap,so_luong_dat,vw_CTPNHAP_VT.* from phieu_nhap join chi_tiet_don_hang join vw_CTPNHAP_VT;
+
+
+
+
+
+# Câu 1. Tạo Stored procedure (SP) cho biết tổng số lượng cuối của vật tư
+# với mã vật tư là tham số vào.
+
+
+
+delimiter //
+create procedure tim_so_luong_ton_kho(in maVatTu varchar(50))
+begin
+    select ma_vat_tu, sum(tong_so_luong_nhap-tong_so_luong_xuat)
+    from vat_tu join ton_kho tk on Vat_tu.id = tk.vat_tu_id
+    where Vat_tu.ma_vat_tu=maVatTu;
+end //
+delimiter ;
+
+call tim_so_luong_ton_kho('b');
+
+# Câu 2. Tạo SP cho biết tổng tiền xuất của vật tư với mã vật tư là tham số
+# vào.
+
+
+delimiter //
+create procedure tim_so_tien_xuat(in maVatTu varchar(50) )
+begin
+    select sum(so_luong_xuat*don_gia_xuat) as Tổng_tiền_xuất
+    from chi_tiet_phieu_xuat join vat_tu vt on chi_tiet_phieu_xuat.vat_tu_id = vt.id
+    where ma_vat_tu=maVatTu;
+end //
+delimiter ;
+
+call tim_so_tien_xuat('c');
+
+
+# Câu 3. Tạo SP cho biết tổng số lượng đặt theo số đơn hàng với số đơn
+# hàng là tham số vào
+delimiter //
+create procedure tim_tong_so_luong_dat_hang(in donHangID int)
+begin
+    select sum(so_luong_dat) from chi_tiet_don_hang
+    where don_hang_id=donHangID;
+end //
+delimiter ;
+
+call tim_tong_so_luong_dat_hang(1);
+
+
+# Câu 4. Tạo SP dùng để thêm một đơn đặt hàng.
+delimiter //
+create procedure add_don_dat_hang(in madon varchar(50),ngayDatHang datetime, NhaCungCapID int)
+begin
+    insert into don_dat_hang(ma_don, ngay_dat_hang, nha_cung_cap_id) values (madon,ngayDatHang,NhaCungCapID);
+end //
+delimiter ;
+
+call add_don_dat_hang('1','2022-04-15',3);
+
+
+# Câu 5. Tạo SP dùng để thêm một chi tiết đơn đặt hàng
+
+delimiter //
+create procedure add_CTDDH(in DonHangID int, vatTuID int , SLDat int)
+begin
+    insert into chi_tiet_don_hang (don_hang_id, vat_tu_id, so_luong_dat) values ( DonHangID, vatTuID , SLDat);
+end //
+delimiter ;
+
+call add_CTDDH(2,2,2);
